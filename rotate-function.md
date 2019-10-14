@@ -29,7 +29,7 @@ F(3) = (0 * 3) + (1 * 2) + (2 * 6) + (3 * 4) = 0 + 2 + 12 + 12 = 26
 
 So the maximum value of `F(0), F(1), F(2), F(3)` is `F(3) = 26`.
 
-## Naive Solution
+## Approach 1: Naive Solution
 
 A straightforward, brute force method might iterate through the array, `A`, with a `for` loop, and at each position `i`, do the following steps:
 
@@ -70,7 +70,7 @@ Steps (1) and (2) both involve making a pass through the array (with length `n`)
 
 As the rotated arrays `B(i)` are constructed one by one, additional space proportional to the original input (size `n`) is created. Additionally, if an array is created to retain each value of `F`, then additional space is required. Either way, `O(n)` additional space is used by this method. Note that even though `n` rotations of the array are created, at no point in time do all `n` rotations need to coexist. Because of block scoping, the same space will be reused to hold each rotation. (It is even possible to achieve `O(1)` additional space if the original input array is allowed to be modified.)
 
-## Linear Time Solution
+## Approach 2: Linear Time Solution
 
 Let's explore the example given in the problem, where `A = [4, 3, 2, 6]`. Suppose we calculate `F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 25`. Is there a way we can calculate `F(1), ..., F(n-1)` without actually reconstructing the rotated arrays?
 
