@@ -31,17 +31,21 @@ So the maximum value of `F(0), F(1), F(2), F(3)` is `F(3) = 26`.
 
 ## Initial Thoughts
 
-A straightforward, brute force method might iterate through the array, `A`, and at each position `i`, do the following steps:
+A straightforward, brute force method might iterate through the array, `A`, with a `for` loop, and at each position `i`, do the following steps:
 
 1. find `B(i)` (the result from rotating `A` by `i` positions),
 2. calculate `F` by multiplying each element of `B(i)` by `i`.
 
-Step (1) could be achieved by actually rotating `A` using successive `.pop()` and `.unshift()` operations. Even better, `B(i)` can be composed with `[...A.slice(i), ...A.slice(0, i)]` (ES6) or `A.slice(i).concat(A.slice(0, i))` (ES5).
+Step (1) could be achieved by actually rotating `A` using successive `.pop()` and `.unshift()` operations. Even better, `B(i)` can be composed with `[...A.slice(i), ...A.slice(0, i)]` (ES6 spread operator) or `A.slice(i).concat(A.slice(0, i))`.
 
 Step (2) could be achieved with another `for` loop, or with a `.reduce()` operation.
 
-The resulting values of `F(i)` might be saved inside another array, for example, until all values of `F` are found. `Math.max()` could then be used to find the greatest value of `F(0), F(1), ..., F(n-1)` as required by the problem.
+The resulting values of `F(i)` might be saved inside another array, for example, until all values of `F` are found. `Math.max()` could then be used to find the greatest value of `F(0), F(1), ..., F(n-1)` as required by the problem. However, since the problem only requires the greatest value of `F`, a more space-efficient method would be to have a single variable that keeps track of the greatest value of `F` so far as the array is traversed.
 
 ### Time Complexity
 
-asdf
+Steps (1) and (2) both involve making a pass through the array (with length `n`). Since both of these steps are themselves inside a `for` loop (that makes `n` iterations), the time complexity is `O(n^2)`.
+
+### Space Complexity
+
+As the rotated arrays `B(i)` are constructed one by one, additional space proportional to the original input (size `n`) is created. Additionally, if an array is created to retain each value of `F`, then additional space is required. Either way, `O(n)` additional space is used by this method.
