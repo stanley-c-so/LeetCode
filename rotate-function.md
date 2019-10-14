@@ -33,7 +33,7 @@ So the maximum value of `F(0), F(1), F(2), F(3)` is `F(3) = 26`.
 
 A straightforward, brute force method might iterate through the array, `A`, with a `for` loop, and at each position `i`, do the following steps:
 
-1. find `B(i)` (the result from rotating `A` by `i` positions),
+1. find `B(i)` (the result from rotating `A` by `i` positions), and
 2. calculate `F(i)` by multiplying each element of `B(i)` by `i`.
 
 Step (1) could be achieved by actually rotating `A` using successive `.pop()` and `.unshift()` operations. Even better, `B(i)` can be composed with `[...A.slice(i), ...A.slice(0, i)]` (ES6 spread operator) or `A.slice(i).concat(A.slice(0, i))`.
@@ -46,16 +46,21 @@ The resulting values of `F(i)` might be saved inside another array, for example,
 
 ```js
 var maxRotateFunction = function(A) {
-  if (!A.length) return 0;    // edge case: empty array input
+
+  // edge case: empty array input
+  if (!A.length) return 0;
+
+  // iterate through array, determining B(i) and F(i)
   const F = [];
   for (let i = 0; i < A.length; i++) {
     const B = [...A.slice(i), ...A.slice(0, i)];
-    F[i] = B.reduce((sum, num, idx) => sum + num * idx, 0);   // initialValue of 0 is required!
+    F[i] = B.reduce((sum, num, idx) => sum + num * idx, 0);     // initialValue of 0 is required!
   }
+
+  // return highest value of F(i)
   return Math.max(...F);
 }
 ```
-
 
 ### Time Complexity
 
@@ -69,3 +74,52 @@ As the rotated arrays `B(i)` are constructed one by one, additional space propor
 
 Let's explore the example given in the problem, where `A = [4, 3, 2, 6]`. Suppose we calculate `F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 25`. Is there a way we can calculate `F(1), ..., F(n-1)` without actually reconstructing the rotated arrays?
 
+Consider the change that occurs when transitioning from `F(i)` to `F(i + 1)`. For example, if transitioning from `F(0)` to `F(1)`, note that `F(1) = (0 * 6) + (1 * 4) + (2 * 3) + (3 * 2) = 16`. Compared to `F(0)`, there is an extra `4`, an extra `3`, and an extra `2`, but there are three fewer `6`s. In other words, `F(1) = F(0) + 4 + 3 + 2 - (3 * 6) = 25 + 9 - 18 = 16`. Similarly, `F(2) = F(1) + 6 + 4 + 3 - (3 * 2) = 16 + 13 - 6 = 23`, etc.
+
+Taking another look at our new definition of `F(1)`, we can rewrite this as `F(0) + (6 + 4 + 3 + 2) - (4 * 6)` or simply `F(0) + S - (4 * 6)` where `S` is the sum of all numbers in the array - this will be useful because `S` is constant for every possible rotation of the array.
+
+Note that when `i = 1`, the index value of the element being subtracted is `A.length - 1`. When `i = 2`, the index value of the element being subtracdted is `A.length - 2`. The general case is `A.length - i` for `i > 0`.
+
+We can now solve this problem with the following three steps:
+
+1. determine `S`,
+2. determine `F(0)`, and
+3. iterate through the array starting at `i = 1`, calculating `F(i) = F(i - 1) + S - (A.length * A[A.length - i])`.
+
+How can we optimize for time? Step (3) cannot be done until `F(0)` and `S` are found - each of which individually require one pass through the array. However, we can accomplish steps (1) and (2) simultaneously while making the first pass through the array, and then tackle step (3) on a second pass.
+
+### Example Code
+
+```js
+var maxRotateFunction = function(A) {
+  const L = A.length;   // using L to be less verbose
+
+  // iterate through array, determining F(0) and sum (sum of all numbers in A)
+  let sum = 0;
+  let F0 = 0;
+  for (let i = 0; i < L; i++) {
+    sum += A[i];
+    F0 += i * A[i];
+  }
+
+  // iterate through array (starting at i === 1), determining F(i), and checking if it is greater than maxSoFar
+  let maxSoFar = F0;
+  let Fprevious = F0;
+  for (let i = 1; i < L; i++) {
+    const Fcurrent = Fprevious + sum - L * A[L - i];
+    maxSoFar = Math.max(maxSoFar, Fcurrent);
+    Fprevious = Fcurrent;
+  }
+
+  // return the highest value of F(i) captured by maxSoFar
+  return maxSoFar;
+}
+```
+
+### Time Complexity
+
+Each of the two passes through the array will take linear time. Thus, the time complexity is `O(n)`.
+
+### Space Complexity
+
+The variables created by this algorithm do not vary in size based on `n`. Thus, this solution uses `O(1)` additional space.
