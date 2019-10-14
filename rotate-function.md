@@ -78,7 +78,7 @@ Consider the change that occurs when transitioning from `F(i)` to `F(i + 1)`. Fo
 
 Taking another look at our new definition of `F(1)`, we can rewrite this as `F(0) + (6 + 4 + 3 + 2) - (4 * 6)` or simply `F(0) + S - (4 * 6)` where `S` is the sum of all numbers in the array - this will be useful because `S` is constant for every possible rotation of the array.
 
-Note that when `i = 1`, the index value of the element being subtracted is `A.length - 1`. When `i = 2`, the index value of the element being subtracdted is `A.length - 2`. The general case is `A.length - i` for `i > 0`.
+Note that when `i = 1`, the index value of the element being subtracted is `A.length - 1`. When `i = 2`, the index value of the element being subtracted is `A.length - 2`. The general case is `A.length - i` for `i > 0`.
 
 We can now solve this problem with the following three steps:
 
