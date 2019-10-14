@@ -34,7 +34,7 @@ So the maximum value of `F(0), F(1), F(2), F(3)` is `F(3) = 26`.
 A straightforward, brute force method might iterate through the array, `A`, with a `for` loop, and at each position `i`, do the following steps:
 
 1. find `B(i)` (the result from rotating `A` by `i` positions),
-2. calculate `F` by multiplying each element of `B(i)` by `i`.
+2. calculate `F(i)` by multiplying each element of `B(i)` by `i`.
 
 Step (1) could be achieved by actually rotating `A` using successive `.pop()` and `.unshift()` operations. Even better, `B(i)` can be composed with `[...A.slice(i), ...A.slice(0, i)]` (ES6 spread operator) or `A.slice(i).concat(A.slice(0, i))`.
 
@@ -67,4 +67,5 @@ As the rotated arrays `B(i)` are constructed one by one, additional space propor
 
 ## Linear Time Solution
 
-asdf
+Let's explore the example given in the problem, where `A = [4, 3, 2, 6]`. Suppose we calculate `F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 25`. Is there a way we can calculate `F(1), ..., F(n-1)` without actually reconstructing the rotated arrays?
+
