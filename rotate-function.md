@@ -42,8 +42,6 @@ Step (2) could be achieved with another `for` loop, or with a `.reduce()` operat
 
 The resulting values of `F(i)` might be saved inside another array, for example, until all values of `F` are found. `Math.max()` could then be used to find the greatest value of `F(0), F(1), ..., F(n-1)` as required by the problem.
 
----
-
 ### Time Complexity
 
 asdf
