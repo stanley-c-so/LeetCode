@@ -31,7 +31,8 @@ So the maximum value of `F(0), F(1), F(2), F(3)` is `F(3) = 26`.
 
 ## Initial Thoughts
 
-A brute force method might iterate through the array, `A`, and at each position `i`, do the following steps:
+A straightforward, brute force method might iterate through the array, `A`, and at each position `i`, do the following steps:
+
 1. find `B(i)` (the result from rotating `A` by `i` positions),
 2. calculate `F` by multiplying each element of `B(i)` by `i`.
 
@@ -41,3 +42,8 @@ Step (2) could be achieved with another `for` loop, or with a `.reduce()` operat
 
 The resulting values of `F(i)` might be saved inside another array, for example, until all values of `F` are found. `Math.max()` could then be used to find the greatest value of `F(0), F(1), ..., F(n-1)` as required by the problem.
 
+---
+
+### Time Complexity
+
+asdf
