@@ -78,15 +78,15 @@ Consider the change that occurs when transitioning from `F(i)` to `F(i + 1)`. Fo
 
 Taking another look at our new definition of `F(1)`, we can rewrite this as `F(0) + (6 + 4 + 3 + 2) - (4 * 6)` or simply `F(0) + S - (4 * 6)` where `S` is the sum of all numbers in the array - this will be useful because `S` is constant for every possible rotation of the array.
 
-Note that when `i = 1`, the index value of the element being subtracted is `A.length - 1`. When `i = 2`, the index value of the element being subtracted is `A.length - 2`. The general case is `A.length - i` for `i > 0`.
+As to the term being subtracted (e.g. `(4 * 6)`), the multiplier (`4`) is the length of the array, and the element being multiplied (`6`) is the number that would have been the final element of the array just before the `i`th rotation. When `i = 1`, the index value of the element being subtracted is `A.length - 1`. When `i = 2`, the index value of the element being subtracted is `A.length - 2`. The general case is `A.length - i` for `i > 0`. (We do not have to worry about going out of bounds, as we do not need to consider `i = 0` if we already know `F(0)`.)
 
-We can now solve this problem with the following three steps:
+Thus, we can now solve this problem with the following three steps:
 
 1. determine `S`,
 2. determine `F(0)`, and
 3. iterate through the array starting at `i = 1`, calculating `F(i) = F(i - 1) + S - (A.length * A[A.length - i])`.
 
-How can we optimize for time? Step (3) cannot be done until `F(0)` and `S` are found - each of which individually require one pass through the array. However, we can accomplish steps (1) and (2) simultaneously while making the first pass through the array, and then tackle step (3) on a second pass.
+How can we optimize for time? Step (3) cannot be done until `F(0)` and `S` are found - each of which individually require one pass through the array. In fact, we can accomplish steps (1) and (2) simultaneously while making the first pass through the array. Thereafter, we can then tackle step (3) on a second pass.
 
 ### Example Code
 
