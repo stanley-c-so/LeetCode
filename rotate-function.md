@@ -29,7 +29,7 @@ F(3) = (0 * 3) + (1 * 2) + (2 * 6) + (3 * 4) = 0 + 2 + 12 + 12 = 26
 
 So the maximum value of `F(0), F(1), F(2), F(3)` is `F(3) = 26`.
 
-## Approach 1: Naive Solution
+## Approach 1: Naive, Brute Force Solution
 
 A straightforward, brute force method might iterate through the array, `A`, with a `for` loop, and at each position `i`, do the following steps:
 
@@ -70,7 +70,40 @@ Steps (1) and (2) both involve making a pass through the array (with length `n`)
 
 As the rotated arrays `B(i)` are constructed one by one, additional space proportional to the original input (size `n`) is created. Additionally, if an array is created to retain each value of `F`, then additional space is required. Either way, `O(n)` additional space is used by this method. Note that even though `n` rotations of the array are created, at no point in time do all `n` rotations need to coexist. Because of block scoping, the same space will be reused to hold each rotation. (It is even possible to achieve `O(1)` additional space if the original input array is allowed to be modified.)
 
-## Approach 2: Linear Time Solution
+## Approach 2: Space-Optimized Brute Force Method Using Pointers
+
+The above brute force method can be implemented without actually rotating the arrays. By using `for` loops, we can calculate each value of `F` and save the highest value found after each iteration.
+
+### Example Code
+
+```js
+var maxRotateFunction = function(A) {
+
+  // edge case: empty array input
+  if (!A.length) return 0;
+
+  // iterate through 'offset' values (simulating rotating the array)
+  let maxSoFar = -Infinity;
+  for (let offset = 0; offset < A.length; offset++) {
+    let F = 0;
+    for (let i = 0; i < A.length; i++) {
+      F += i * A[(offset + i) % A.length]     // modulo helps to 'wrap around' the end of the array
+    }
+    maxSoFar = Math.max(maxSoFar, F);
+  }
+  return maxSoFar;
+}
+```
+
+### Time Complexity
+
+Time complexity is `O(n^2)` because of the nested `for` loops. This makes sense - every rotation has to be considered, and for each rotation, every element needs to be analyzed.
+
+### Space Complexity
+
+Thanks to the use of pointers, no extra space dependent on `n` needs to be used. Thus the space complexity is `O(1)` extra space.
+
+## Approach 3: Linear Time Solution
 
 Let's explore the example given in the problem, where `A = [4, 3, 2, 6]`. Suppose we calculate `F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 25`. Is there a way we can calculate `F(1), ..., F(n-1)` without actually reconstructing the rotated arrays?
 
