@@ -87,7 +87,7 @@ var maxRotateFunction = function(A) {
   for (let offset = 0; offset < A.length; offset++) {
     let F = 0;
     for (let i = 0; i < A.length; i++) {
-      F += i * A[(offset + i) % A.length]     // modulo helps to 'wrap around' the end of the array
+      F += i * A[(offset + i) % A.length];    // modulo helps to 'wrap around' the end of the array
     }
     maxSoFar = Math.max(maxSoFar, F);
   }
