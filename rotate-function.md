@@ -97,7 +97,7 @@ var maxRotateFunction = function(A) {
 
 ### Time Complexity
 
-Time complexity is `O(n^2)` because of the nested `for` loops. This makes sense - every rotation has to be considered, and for each rotation, every element needs to be analyzed.
+Time complexity is `O(n^2)` because of the nested `for` loops. This makes sense: every rotation has to be considered, and for each rotation, every element needs to be analyzed.
 
 ### Space Complexity
 
