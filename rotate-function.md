@@ -151,7 +151,7 @@ var maxRotateFunction = function(A) {
 
 ### Time Complexity
 
-Each of the two passes through the array will take linear time. Thus, the time complexity is `O(n)`.
+Each of the two passes through the array will take linear time. Thus, the time complexity is `O(n)` - a significant improvement over the brute force method!
 
 ### Space Complexity
 
