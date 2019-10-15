@@ -105,7 +105,7 @@ Thanks to the use of pointers, no extra space dependent on `n` needs to be used.
 
 ## Approach 3: Linear Time Solution
 
-Let's explore the example given in the problem, where `A = [4, 3, 2, 6]`. Suppose we calculate `F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 25`. Is there a way we can calculate `F(1), ..., F(n-1)` without actually reconstructing the rotated arrays?
+Let's explore the example given in the problem, where `A = [4, 3, 2, 6]`. Suppose we calculate `F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 25`. Is there a way we can calculate `F(1), ..., F(n-1)` without actually reconstructing the rotated arrays or making any more passes through the array?
 
 Consider the change that occurs when transitioning from `F(i)` to `F(i + 1)`. For example, if transitioning from `F(0)` to `F(1)`, note that `F(1) = (0 * 6) + (1 * 4) + (2 * 3) + (3 * 2) = 16`. Compared to `F(0)`, there is an extra `4`, an extra `3`, and an extra `2`, but there are three fewer `6`s. In other words, `F(1) = F(0) + 4 + 3 + 2 - (3 * 6) = 25 + 9 - 18 = 16`. Similarly, `F(2) = F(1) + 6 + 4 + 3 - (3 * 2) = 16 + 13 - 6 = 23`, etc.
 
