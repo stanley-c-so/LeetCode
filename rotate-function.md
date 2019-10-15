@@ -109,7 +109,7 @@ Let's explore the example given in the problem, where `A = [4, 3, 2, 6]`. Suppos
 
 Consider the change that occurs when transitioning from `F(i)` to `F(i + 1)`. For example, if transitioning from `F(0)` to `F(1)`, note that `F(1) = (0 * 6) + (1 * 4) + (2 * 3) + (3 * 2) = 16`. Compared to `F(0) = (0 * 4) + (1 * 3) + (2 * 2) + (3 * 6) = 25`, `F(1)` has an extra `4`, an extra `3`, and an extra `2`, but there are three fewer `6`s. In other words, `F(1) = F(0) + 4 + 3 + 2 - (3 * 6) = 16`. Similarly, `F(2) = F(1) + 6 + 4 + 3 - (3 * 2) = 23`, etc.
 
-Taking another look at our new definition of `F(1)`, we can rewrite this as `F(0) + (6 + 4 + 3 + 2) - (4 * 6)` or simply `F(0) + S - (4 * 6)` where `S` is the sum of all numbers in the array - this will be useful because `S` is constant for every possible rotation of the array.
+Taking another look at our new definition of `F(1)`, we can rewrite this as `F(1) = F(0) + (6 + 4 + 3 + 2) - (4 * 6)` or simply `F(0) + S - (4 * 6)` where `S` is the sum of all numbers in the array - this will be useful because `S` is constant for every possible rotation of the array.
 
 As to the term being subtracted (e.g. `(4 * 6)`), the multiplier (`4`) is the length of the array, and the element being multiplied (`6`) is the number that would have been the final element of the array just before the `i`th rotation. When `i = 1`, the index value of the element being subtracted is `A.length - 1`. When `i = 2`, the index value of the element being subtracted is `A.length - 2`. The general case is `A.length - i` for `i > 0`. (We do not have to worry about going out of bounds, as we do not need to consider `i = 0` if we already know `F(0)`.)
 
